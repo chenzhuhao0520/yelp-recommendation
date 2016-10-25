@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Input text with D3</title> <!-- adapted from http://javadude.wordpress.com/2012/05/17/d3-js-with-dynamic-data/ -->
+    <script type="text/javascript" src="d3/d3.v3.min.js"></script>
+
+    <style>
+        body {font-family: Times New Roman; line-height: 160%; font-size: 20px; text-align: center;}
+        ul {list-style: none; margin: 0; padding: 0;}
+        li {display: inline-block; min-width: 80px; padding: 10px; background-color: #f3f3f3; margin: 0;}
+        button {font-size: 17px;padding: 8px 15px; margin: 50px 10px 20px 50px;}
+	input { width: 250px; border: 1px dotted #ccc; background: #f3f3f3; font-family: monospace; padding: 8px 15px; font-size: 17px; margin: 50px 10px 20px 30px; color: black;}
+        input:focus { background-color:#f3f3f3; outline: none;}
+
+    </style>
+</head>
+    <body style="background:#f3f3f3 url('a.jpg');">
+	<div class="col-sm-2" >
+        	<img src="b.png" width="150" height="75"/>
+        </div>
+	<div class="col-sm-10" style="color: white;font-size: 24px">
+        	<h2>Recommendation Explorer</h2>
+        </div>
+	<div class="col-sm-10" style="color: white;font-size: 12px">
+        	<h2>A Personalized Recommendation System for Restaurants in Las Vagas</h2>
+        </div>
+        <form name="myform" onSubmit="return handleClick()">
+            <button type="submit">Recommend Restaurant</button>
+            <input type="text" id="myVal" placeholder="Type your user id here">
+            <input type="text" id="output" placeholder="Recommended Restaurant">  
+        </form>
+	<form name="myform" onSubmit="return handleClick2()">
+            <button type="submit">Similar Restaurant</button>
+	    <input type="text" id="output2" placeholder="Similar Restaurant"> 
+            <input type="text" id="output3" placeholder="Similar Restaurant"> 
+	    <input type="text" id="output4" placeholder="Similar Restaurant">  
+        </form>
+        <ul></ul>
+ 	
+        <script>
+ 
+            var dataset = [];
+ 	    var result;
+
+            function handleClick(event){
+            	var id = document.getElementById("myVal").value
+            	console.log(id)
+            	d3.json("new_recom.json", function(error, data){
+            		console.log(data)
+            		data.forEach(function(d){
+				dataset = [];
+            			if (d.user_id == id){
+            				result = d.recom;
+            				result.forEach(function(a) {
+						output.value = a.biz_name;
+            				})
+            			}
+            		})
+
+ 			console.log(data)
+ 		})
+                return false;                
+            }
+	    function handleClick2(event){
+            	var name = document.getElementById("output").value
+            	console.log(name)
+            	d3.json("similar_biz.json", function(error, data){
+            		console.log(data)
+            		data.forEach(function(d){
+				dataset = [];
+            			if (d.biz_name == name){
+            				result = d.similar_biz;
+            				result.forEach(function(a, i) {
+						if (i == 0) {output2.value = a.business_name;}
+						if (i == 1) {output3.value = a.business_name;}
+						if (i == 2) {output4.value = a.business_name;}
+            				})
+            			}
+            		})
+
+ 			console.log(data)
+ 		})
+                return false;                
+            }
+ 		
+ 
+        </script>
+
+
+    </body>
+</html>
