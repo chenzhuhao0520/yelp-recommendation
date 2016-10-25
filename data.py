@@ -2,12 +2,12 @@ import json
 import sqlite3
 json_file = "b_id_state.json"
 db_file = "data.db"
-new_file = open("Pittsburgh_business.json", 'a')
+new_file = open("LV_business.json", 'a')
 read_file = open(json_file, 'r')
 lines = read_file.readlines()
 false = 0
 true = 1
-city = "Pittsburgh"
+city = "LV"
 a =[]
 for line in lines:
 	line = line.strip('\n')
